@@ -1,0 +1,20 @@
+{
+  "name": "FTFA",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "fast-html-parser": "^1.0.1",
+    "firebase": "^3.3.0",
+    "native-base": "https://github.com/GeekyAnts/NativeBase#feat/tutorial_app",
+    "react": "15.3.1",
+    "react-native": "0.32.0",
+    "react-native-audioplayer": "^0.2.0",
+    "react-native-file-opener": "^0.2.0",
+    "react-native-fs": "^2.0.1-rc.2",
+    "react-native-html-parser": "0.0.3",
+    "react-native-vector-icons": "^2.0.3"
+  }
+}
