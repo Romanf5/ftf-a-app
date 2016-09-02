@@ -19,6 +19,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 export default class MediaList extends Component {
 	constructor(props) {
 			super(props);
+			this.itemsRef = firebaseApp.database().ref();
 			this.state = {
 			selectedItem: undefined,
 			modalVisible: false,
@@ -28,11 +29,11 @@ export default class MediaList extends Component {
 		}
 	}
 
+	// // Firebase
 	componentDidMount() {
 		var that = this;
 		this.getVideos();
 	}
-
 
 	setModalVisible(visible, x) {
 		this.setState({
@@ -46,34 +47,22 @@ export default class MediaList extends Component {
 		this.setState({
 			loading: true
 		});
-
 		var that = this;
-		return fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&q=cats&type=video&videoCaption=closedCaption&key=AIzaSyAcJCm3tEjtFVZ-jxyHrdIJtIQ4gt2lm6g')
-			.then((response) => response.json())
-			.then((responseJson) => {
-				// Store the results in the state variable results and set loading to 
-				// false to remove the spinner and display the list of videos
-				that.setState({
-				 results: responseJson,
-				 loading: false
+		return 	this.itemsRef.on("value", function(snapshot) {
+					console.log(snapshot.val());
+					that.setState({
+						results: snapshot.val(),
+						loading: false
+					});
+				}, function (errorObject) {
+					console.log("The read failed: " + errorObject.code);
 				});
-				console.log(responseJson);
-
-				return responseJson.items;
-				})
-			.catch((error) => {
-				that.setState({
-				 loading: false
-				});
-
-				console.error(error);
-			});
-	}
+	
 
 	render() {
 		var that = this;
 		return (
-		 	<Container>
+			<Container>
 				<Header backgroundColor={'rgb(13, 85, 100)'}>
 						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
@@ -81,10 +70,10 @@ export default class MediaList extends Component {
 					{this.state.loading ? <Spinner color={'rgb(13, 85, 100)'} /> :
 					<List dataArray={this.state.results.items} renderRow={(item) => 
 						<ListItem button onPress={()=>this.setModalVisible(true, item)}>
-							<Thumbnail square size={100} source={{ uri: item.snippet.thumbnails.high.url }} />
-							<Text style={{ fontWeight: '600' }}>Title: { item.snippet.title }</Text>
-							<Text style={{ color: '#007594' }}>{ item.snippet.description.substring(0, 70) + '...' }</Text>
-			 			</ListItem>
+							<Thumbnail square size={100} source={{ uri: item.thumbnail}} />
+							<Text style={{ fontWeight: '600' }}>Title: { item.title }</Text>
+							<Text style={{ color: '#007594' }}>{ item.description.substring(0, 70) + '...' }</Text>
+						</ListItem>
 					}/>}
 					<Modal
 						animationType="slide"
@@ -94,23 +83,23 @@ export default class MediaList extends Component {
 						>
 						<Header backgroundColor={'rgb(13, 85, 100)'}>
 							<Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible, this.state.selectedItem)}}>
-						 		<Image source={require('../assets/arrow-back.png')} />
+								<Image source={require('../assets/arrow-back.png')} />
 							</Button>
 							<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 						</Header>
 						<Card style={{paddingTop: 20}}>
 							{!this.state.selectedItem ? <View /> :
 							<CardItem cardBody style={{justifyContent: 'flex-start'}}>
-								<H3 style={styles.header}> {this.state.selectedItem.snippet.title}
+								<H3 style={styles.header}> {this.state.title}
 									</H3>
 									{/*<Image style={styles.modalImage} source={{uri: this.state.selectedItem.snippet.thumbnails.high.url}}  />*/}
 									<Text>
-									 {this.state.selectedItem.snippet.description}
+									 {this.state.description}
 									</Text>
 							</CardItem>}
 						</Card>
 					</Modal>
-			 	</Content>
+				</Content>
 			</Container>
 		);
 	}
