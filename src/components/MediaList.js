@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from "react";
 
-import { AppRegistry, StyleSheet, View, Image, Navigator, Modal, Platform } from 'react-native';
+import { AppRegistry, StyleSheet, View, Image, Navigator, Modal, Platform, WebView } from 'react-native';
 
 import { Container, Header, Title, Content, List, Thumbnail, ListItem, Text, Button, Spinner, Card, CardItem, H3 } from 'native-base';
+
+import VideoFrame from './VideoFrame';
+
+import HTMLParser from 'fast-html-parser';
 
 import * as firebase from 'firebase';
 
@@ -13,8 +17,13 @@ const firebaseConfig = {
     databaseURL: "https://ftf-a-a8f5a.firebaseio.com",
     storageBucket: "ftf-a-a8f5a.appspot.com",
   };
-  
+
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+firebaseApp.auth().signInAnonymously().catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+});
 
 export default class MediaList extends Component {
 	constructor(props) {
@@ -25,11 +34,32 @@ export default class MediaList extends Component {
 			modalVisible: false,
 			results: {
 				items: []
-			}
+			},
+      result: ''
 		}
 	}
 
-	// // Firebase
+  getHtml(uri) {
+    return fetch(uri)
+        .then((response) => response.text())
+        .then((text) => {
+          var root = HTMLParser.parse(text);
+          //console.log(root.querySelector('video'));
+          var iframeAttrs = root.querySelector('iframe').rawAttrs
+          var iframe = `<iframe ` + iframeAttrs + `></iframe>`
+          //console.log(iframe);
+
+          this.setState({
+            result: iframe
+          });
+
+          console.log(this.state);
+
+          return text;
+        });
+  }
+
+	// Firebase
 	componentDidMount() {
 		var that = this;
 		this.getVideos();
@@ -49,7 +79,6 @@ export default class MediaList extends Component {
 		});
 		var that = this;
 		return 	this.itemsRef.on("value", function(snapshot) {
-					console.log(snapshot.val());
 					that.setState({
 						results: snapshot.val(),
 						loading: false
@@ -57,19 +86,22 @@ export default class MediaList extends Component {
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
 				});
-	
+	}
 
 	render() {
 		var that = this;
 		return (
-			<Container>
+      <Container>
 				<Header backgroundColor={'rgb(13, 85, 100)'}>
 						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
 				<Content backgroundColor={'#f6f6f6'}>
 					{this.state.loading ? <Spinner color={'rgb(13, 85, 100)'} /> :
-					<List dataArray={this.state.results.items} renderRow={(item) => 
-						<ListItem button onPress={()=>this.setModalVisible(true, item)}>
+					<List dataArray={this.state.results.items} renderRow={(item) =>
+						<ListItem button onPress={()=> {
+                                            this.setModalVisible(true, item);
+                                            this.getHtml(item.uri);
+                                          }}>
 							<Thumbnail square size={100} source={{ uri: item.thumbnail}} />
 							<Text style={{ fontWeight: '600' }}>Title: { item.title }</Text>
 							<Text style={{ color: '#007594' }}>{ item.description.substring(0, 70) + '...' }</Text>
@@ -89,14 +121,11 @@ export default class MediaList extends Component {
 						</Header>
 						<Card style={{paddingTop: 20}}>
 							{!this.state.selectedItem ? <View /> :
-							<CardItem cardBody style={{justifyContent: 'flex-start'}}>
-								<H3 style={styles.header}> {this.state.title}
-									</H3>
-									{/*<Image style={styles.modalImage} source={{uri: this.state.selectedItem.snippet.thumbnails.high.url}}  />*/}
-									<Text>
-									 {this.state.description}
-									</Text>
-							</CardItem>}
+									<WebView
+                    source={{html: this.state.result}}
+                    style={{marginTop: 20}}
+                  />
+              }
 						</Card>
 					</Modal>
 				</Content>

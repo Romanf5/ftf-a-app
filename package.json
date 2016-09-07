@@ -1,14 +1,20 @@
 {
-  "name": "FTFA",
-  "version": "0.0.1",
+  "name": "FTF-A",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.13.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.2.0",
+    "eslint-plugin-react-native": "^2.0.0",
     "fast-html-parser": "^1.0.1",
     "firebase": "^3.3.0",
-    "native-base": "https://github.com/GeekyAnts/NativeBase#feat/tutorial_app",
+    "native-base": "0.5.6",
     "react": "15.3.1",
     "react-native": "0.32.0",
     "react-native-audioplayer": "^0.2.0",
