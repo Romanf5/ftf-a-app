@@ -1,13 +1,11 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
+import { Platform, StyleSheet, Image} from 'react-native';
 
-import { AppRegistry, StyleSheet, View, Image, Navigator, Modal, Platform, WebView } from 'react-native';
-
+// Thirdparty
 import { Container, Header, Title, Content, List, Thumbnail, ListItem, Text, Button, Spinner, Card, CardItem, H3 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 
 import VideoFrame from './VideoFrame';
-
-import HTMLParser from 'fast-html-parser';
-
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -29,47 +27,25 @@ export default class MediaList extends Component {
 	constructor(props) {
 			super(props);
 			this.itemsRef = firebaseApp.database().ref();
+      this.storageRef = firebase.storage().ref();
 			this.state = {
 			selectedItem: undefined,
-			modalVisible: false,
 			results: {
 				items: []
-			},
-      result: ''
+			}
 		}
 	}
 
-  getHtml(uri) {
-    return fetch(uri)
-        .then((response) => response.text())
-        .then((text) => {
-          var root = HTMLParser.parse(text);
-          //console.log(root.querySelector('video'));
-          var iframeAttrs = root.querySelector('iframe').rawAttrs
-          var iframe = `<iframe ` + iframeAttrs + `></iframe>`
-          //console.log(iframe);
-
-          this.setState({
-            result: iframe
-          });
-
-          console.log(this.state);
-
-          return text;
-        });
-  }
-
-	// Firebase
-	componentDidMount() {
+	componentWillMount() {
 		var that = this;
-		this.getVideos();
+		that.getVideos();
 	}
 
-	setModalVisible(visible, x) {
+	showItem(x) {
 		this.setState({
-			modalVisible: visible,
 			selectedItem: x
 		});
+
 	}
 
 	getVideos() {
@@ -79,9 +55,25 @@ export default class MediaList extends Component {
 		});
 		var that = this;
 		return 	this.itemsRef.on("value", function(snapshot) {
+          var items = snapshot.val().items;
+          var storage = [];
+          for (x in items) {
+            storage[x] = {
+              description: items[x].description,
+              thumbnail: items[x].thumbnail,
+              title: items[x].title,
+              type: items[x].type,
+              uri: that.storageRef.child(snapshot.val().items[x].uri).getMetadata().then(function(metadata) {
+                      return metadata.downloadURLs[0];
+                    }).catch(function(error) {
+                      return null
+                    })
+            }
+          }
+          //console.log(storage);
 					that.setState({
-						results: snapshot.val(),
-						loading: false
+						results: storage,
+						loading: false,
 					});
 				}, function (errorObject) {
 					console.log("The read failed: " + errorObject.code);
@@ -97,37 +89,18 @@ export default class MediaList extends Component {
 				</Header>
 				<Content backgroundColor={'#f6f6f6'}>
 					{this.state.loading ? <Spinner color={'rgb(13, 85, 100)'} /> :
-					<List dataArray={this.state.results.items} renderRow={(item) =>
-						<ListItem button onPress={()=> {
-                                            this.setModalVisible(true, item);
-                                            this.getHtml(item.uri);
-                                          }}>
-							<Thumbnail square size={100} source={{ uri: item.thumbnail}} />
-							<Text style={{ fontWeight: '600' }}>Title: { item.title }</Text>
-							<Text style={{ color: '#007594' }}>{ item.description.substring(0, 70) + '...' }</Text>
+					<List dataArray={this.state.results} renderRow={(item) =>
+
+						<ListItem button onPress={() => {   console.log(item);
+                                                Actions.MediaScreen({
+                                                    item: item
+                                                });
+                                              }} >
+							<Thumbnail size={80} source={{uri: item.thumbnail}} />
+							<Text style={{ fontWeight: '600' }}>{item.title}</Text>
+							<Text style={{ color: '#007594' }}>{item.description}</Text>
 						</ListItem>
 					}/>}
-					<Modal
-						animationType="slide"
-						transparent={false}
-						visible={this.state.modalVisible}
-						onRequestClose={() => {alert("Modal has been closed.")}}
-						>
-						<Header backgroundColor={'rgb(13, 85, 100)'}>
-							<Button transparent onPress={() => {this.setModalVisible(!this.state.modalVisible, this.state.selectedItem)}}>
-								<Image source={require('../assets/arrow-back.png')} />
-							</Button>
-							<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
-						</Header>
-						<Card style={{paddingTop: 20}}>
-							{!this.state.selectedItem ? <View /> :
-									<WebView
-                    source={{html: this.state.result}}
-                    style={{marginTop: 20}}
-                  />
-              }
-						</Card>
-					</Modal>
 				</Content>
 			</Container>
 		);

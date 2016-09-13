@@ -6,12 +6,6 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.13.0",
-    "eslint-plugin-jsx-a11y": "^2.1.0",
-    "eslint-plugin-react": "^6.2.0",
-    "eslint-plugin-react-native": "^2.0.0",
     "fast-html-parser": "^1.0.1",
     "firebase": "^3.3.0",
     "native-base": "0.5.6",
@@ -19,8 +13,11 @@
     "react-native": "0.32.0",
     "react-native-audioplayer": "^0.2.0",
     "react-native-file-opener": "^0.2.0",
-    "react-native-fs": "^2.0.1-rc.2",
-    "react-native-html-parser": "0.0.3",
-    "react-native-vector-icons": "^2.0.3"
+    "react-native-orientation": "^1.17.0",
+    "react-native-router-flux": "^3.35.0",
+    "react-native-swipe-carousel": "^0.1.7",
+    "react-native-vector-icons": "^2.0.3",
+    "react-native-video": "^0.9.0",
+    "react-native-video-player": "^0.1.2"
   }
 }

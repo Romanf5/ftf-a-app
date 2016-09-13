@@ -4,9 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.github.yamill.orientation.OrientationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.sh3rawi.RNAudioPlayer.RNAudioPlayer;
-import com.rnfs.RNFSPackage;
 import com.fileopener.FileOpenerPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -29,9 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OrientationPackage(this),
             new VectorIconsPackage(),
             new RNAudioPlayer(),
-            new RNFSPackage(),
             new FileOpenerPackage(),
             new ReactVideoPackage()
       );
