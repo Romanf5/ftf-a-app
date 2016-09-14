@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Navigator, View  } from 'react-native';
+import { StyleSheet, Image, StatusBar, View  } from 'react-native';
 
 // Thirdparty
 import { Container, Header, Title, Content, List, Thumbnail, ListItem, Text, Button, Spinner, Card, CardItem, H3 } from 'native-base';
@@ -9,7 +9,7 @@ import SwipeCarousel from 'react-native-swipe-carousel';
 import { Actions, ActionConst, NavBar } from 'react-native-router-flux';
 import Orientation from 'react-native-orientation';
 
-var styles = StyleSheet;
+
 
 export default class MediaScreen extends Component {
 	constructor(props) {
@@ -47,19 +47,9 @@ export default class MediaScreen extends Component {
     //beginning of the js code.
     var initial = Orientation.getInitialOrientation();
     if (initial === 'PORTRAIT') {
-			styles.create({
-				backgroundVideo: {},
-			});
+
     } else {
-			styles.create({
-				backgroundVideo: {
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					bottom: 0,
-					right: 0,
-				},
-			});
+
     }
 
 		var that = this;
@@ -96,36 +86,36 @@ export default class MediaScreen extends Component {
 						</Button>
 						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
-				<Content backgroundColor={'#f6f6f6'} style={{padding: 15}}>
-					<H3 style={{textAlign: 'center', fontWeight: 'bold'}}>{this.state.selectedItem.title}</H3>
-					<Card style={{borderRadius: 0}}>
-					<CardItem style={{padding: 0, borderRadius: 0}}>
-					<VideoPlayer
-							thumbnail={{uri: this.state.selectedItem.thumbnail}}
-							video={{uri: this.state.selectedItem.uri.ka}}
-							style={styles.backgroundVideo}
-					/>
-					</CardItem>
-
-
-							<Grid style={{padding: 15}}>
-							<Row style={{minHeight: 50}}>
-									<Col style={{}}>
-										<H3 style={{fontWeight: 'bold'}}>{this.state.selectedItem.title}</H3>
-									</Col>
-									<Col style={{alignItems: "center"}}>
+				<Content style={{backgroundColor: '#f6f6f6'}}>
+				<H3 style={{textAlign: 'center', fontWeight: 'bold', marginTop: 15}}>{this.state.selectedItem.title}</H3>
+					<View style={styles.shad}>
+						<View>
+							<VideoPlayer
+										thumbnail={{uri: this.state.selectedItem.thumbnail}}
+										video={{uri: this.state.selectedItem.uri.ka}}
+										style={styles.backgroundVideo}
+								/>
+						</View>
+						<View style={styles.descrTitle}>
+							<Grid>
+								<Col>
+									<Text style={styles.txt}>{this.state.selectedItem.title}</Text>
+								</Col>
+								<Col style={{width: 70}}>
 									<Image
-										style={{ width: 40, alignSelf: 'flex-end'}}
+										style={styles.img}
 										source={(this.state.selectedItem.type == 'video') ? require('../assets/icon-movie.png') : (this.state.selectedItem.type == 'audio') ? require('../assets/icon-audio.png') : require('../assets/FTF-A-logo-bar.png')}
 									/>
-									</Col>
-									</Row>
-									<Row>
-							<Text style={{flex: 1}}>{this.state.selectedItem.description}</Text>
-							</Row>
-					</Grid>
+								</Col>
+							</Grid>
+							<Text style={{marginTop: 25}}>{this.state.selectedItem.description}</Text>
+						</View>
+					</View>
 
-					</Card>
+
+
+
+
 
 				{/* <SwipeCarousel>
 						<View>
@@ -148,4 +138,25 @@ export default class MediaScreen extends Component {
   }
 }
 
-// Later on in your styles..
+
+var styles = StyleSheet.create({
+	img: {
+		alignSelf: "flex-end"
+	},
+	txt: {
+		fontWeight: 'bold'
+	},
+	descrTitle: {
+		//flexDirection: "row",
+		backgroundColor: '#fff',
+		padding: 10,
+		paddingBottom: 30
+	},
+	shad: {
+		shadowColor: 'rgb(13, 85, 100)',
+		shadowOffset: {width: 0, height: 3},
+		shadowOpacity: 0.2,
+		shadowRadius: 1.5,
+		margin: 15
+	}
+})

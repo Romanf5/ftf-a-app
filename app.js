@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, View, StatusBar } from 'react-native';
 
 // Thirdparty
+import Container from 'native-base';
 import { Router, Scene } from 'react-native-router-flux';
 import VideoPlayer from 'react-native-video-player';
 
@@ -12,6 +13,10 @@ import MediaScreen from './src/components/MediaScreen';
 
 class FTFA extends Component {
 
+  componentWillMount() {
+    StatusBar.setBarStyle('light-content', true);
+  }
+
   render() {
     return (
         <Router hideNavBar={true}>
@@ -20,6 +25,7 @@ class FTFA extends Component {
             <Scene key="MediaScreen" component={MediaScreen} title="FTF-A" />
           </Scene>
         </Router>
+
     );
   }
 }

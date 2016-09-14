@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, Image} from 'react-native';
+import { Platform, StyleSheet, Image, StatusBar } from 'react-native';
 
 // Thirdparty
 import { Container, Header, Title, Content, List, Thumbnail, ListItem, Text, Button, Spinner, Card, CardItem, H3 } from 'native-base';
@@ -97,8 +97,8 @@ export default class MediaList extends Component {
                                                 });
                                               }} >
 							<Thumbnail size={80} source={{uri: item.thumbnail}} />
-							<Text style={{ fontWeight: '600' }}>{item.title}</Text>
-							<Text style={{ color: '#007594' }}>{item.description}</Text>
+							<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
+							<Text note style={{ color: '#007594' }}>{item.description}</Text>
 						</ListItem>
 					}/>}
 				</Content>
@@ -126,11 +126,11 @@ const styles = StyleSheet.create({
 				marginBottom: -10
 		},
 		backgroundVideo: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0,
+  		position: 'absolute',
+  		top: 0,
+  		left: 0,
+  		bottom: 0,
+  		right: 0,
 	 },
 
 });
