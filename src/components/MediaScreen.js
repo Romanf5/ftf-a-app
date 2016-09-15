@@ -87,7 +87,9 @@ export default class MediaScreen extends Component {
 						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
 				<Content style={{backgroundColor: '#f6f6f6'}}>
-				<H3 style={{textAlign: 'center', fontWeight: 'bold', marginTop: 15}}>{this.state.selectedItem.title}</H3>
+					<View style={{paddingLeft: 15, paddingRight: 15}}>
+						<H3 style={{textAlign: 'center', fontWeight: 'bold', marginTop: 15}}>{this.state.selectedItem.title}</H3>
+					</View>
 					<View style={styles.shad}>
 						<View>
 							<VideoPlayer

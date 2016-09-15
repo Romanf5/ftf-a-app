@@ -5,13 +5,37 @@ import { AppRegistry, View, StatusBar } from 'react-native';
 import Container from 'native-base';
 import { Router, Scene } from 'react-native-router-flux';
 import VideoPlayer from 'react-native-video-player';
+import SplashScreen from 'rn-splash-screen';
+import AudioPlayer from 'react-native-audioplayer';
 
 // Custom Components
 import MediaList from './src/components/MediaList';
 import MediaScreen from './src/components/MediaScreen';
 
-
 class FTFA extends Component {
+
+    state = {
+      isLoading: true,
+    };
+
+
+  componentWillMount() {
+
+  }
+
+  componentDidMount() {
+    AudioPlayer.play('splash-sound.wav');
+    global.setTimeout(() => {
+      this.setState({isLoading: false});
+    }, 1000);
+  }
+
+  componentDidUpdate() {
+    if (!this.state.isLoading) {
+      // Hide splash screen
+      SplashScreen.hide();
+    }
+  }
 
   componentWillMount() {
     StatusBar.setBarStyle('light-content', true);
