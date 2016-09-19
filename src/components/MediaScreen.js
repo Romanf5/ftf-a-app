@@ -84,11 +84,11 @@ export default class MediaScreen extends Component {
 						<Button transparent onPress={Actions.pop}>
 							<Image source={require('../assets/arrow.png')} />
 						</Button>
-						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
+						<Title style={{ marginTop: 8 }}><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
 				<Content style={{backgroundColor: '#f6f6f6'}}>
 					<View style={{paddingLeft: 15, paddingRight: 15}}>
-						<H3 style={{textAlign: 'center', fontWeight: 'normal', marginTop: 15 }}>{this.state.selectedItem.title}</H3>
+			
 					</View>
 					<View style={styles.shad}>
 						<View>
@@ -155,10 +155,10 @@ var styles = StyleSheet.create({
 		paddingBottom: 30
 	},
 	shad: {
-		shadowColor: 'rgb(13, 85, 100)',
-		shadowOffset: {width: 0, height: 3},
-		shadowOpacity: 0.2,
-		shadowRadius: 1.5,
-		margin: 15
+		// shadowColor: 'rgb(130, 130, 130)',
+		// shadowOffset: {width: 3, height: 3},
+		// shadowOpacity: 0.2,
+		// shadowRadius: 1.5,
+		 margin: 8
 	}
 })

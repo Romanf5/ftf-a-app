@@ -4,6 +4,7 @@ import { Platform, StyleSheet, Image, StatusBar } from 'react-native';
 // Thirdparty
 import { Container, Header, Title, Content, List, Thumbnail, ListItem, Text, Button, Spinner, Card, CardItem, H3 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 
 import VideoFrame from './VideoFrame';
 import * as firebase from 'firebase';
@@ -86,7 +87,7 @@ export default class MediaList extends Component {
 		return (
       <Container>
 				<Header backgroundColor={'rgb(13, 85, 100)'}>
-						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
+						<Title style={{ marginTop: 8 }}><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
 				<Content backgroundColor={'#f6f6f6'}>
 					{this.state.loading ? <Spinner color={'rgb(13, 85, 100)'} /> :
@@ -97,13 +98,25 @@ export default class MediaList extends Component {
                                                     item: item
                                                 });
                                               }} >
-							<Thumbnail size={80} source={{uri: item.thumbnail}} />
-							<Text style={{ fontWeight: 'normal', fontSize: 12, width: 160 }}>{item.title}</Text>
-                <Image
-            style={styles.img}
-            source={(item.type == 'video') ? require('../assets/video-greyish.png') : (item.type == 'audio') ? require('../assets/audio-greyish.png') : require('../assets/FTF-A-logo-bar.png')}
-   />
-							<Text note style={{ color: '#0D5564', fontSize: 10, width: 160 }}>{item.description}</Text>
+              <Grid>
+                 <Col style={{width: 80,height: 90, marginTop: 5}}>
+                   <Thumbnail style= {{marginTop: 5}} size={80} source={{uri: item.thumbnail}} />
+                 </Col>
+                 <Col style={{ width: 180,height: 90, margin: 5, marginLeft: 12 }}>
+                    <Text style={{ fontWeight: 'normal', fontSize: 12, lineHeight: 16,marginTop: 5 }}>{item.title}</Text>
+                    	<Text note style={{ color: '#0D5564', fontSize: 10, lineHeight: 14, marginTop: 7}}>{item.description}</Text>
+                 </Col>
+                 <Col style={{width: 25 ,height: 90, margin: 5, paddingLeft: 8 }}>
+                   <Image style={{marginTop: 40, width: 32, height: 28 }}
+
+                 source={(item.type == 'video') ? require('../assets/video-greyish.png') : (item.type == 'audio') ? require('../assets/audio-greyish.png') : require('../assets/FTF-A-logo-bar.png')}
+                 />
+                 </Col>
+             </Grid>
+
+
+
+
 
 						</ListItem>
 					}/>}
@@ -137,6 +150,6 @@ const styles = StyleSheet.create({
   		left: 0,
   		bottom: 0,
   		right: 0,
-	 },
+	 }
 
 });
