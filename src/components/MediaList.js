@@ -10,10 +10,11 @@ import * as firebase from 'firebase';
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCWi7iPeSRuXEzC9m6UIv7vu70DXpwhuYo",
-    authDomain: "ftf-a-a8f5a.firebaseapp.com",
-    databaseURL: "https://ftf-a-a8f5a.firebaseio.com",
-    storageBucket: "ftf-a-a8f5a.appspot.com",
+     apiKey: "AIzaSyCNDshofwLcKbm9D3EqmTT1kT8ZT_DJVN8",
+     authDomain: "ftfa-app-db.firebaseapp.com",
+     databaseURL: "https://ftfa-app-db.firebaseio.com",
+     storageBucket: "ftfa-app-db.appspot.com",
+     messagingSenderId: "682909824696"
   };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -97,8 +98,13 @@ export default class MediaList extends Component {
                                                 });
                                               }} >
 							<Thumbnail size={80} source={{uri: item.thumbnail}} />
-							<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
-							<Text note style={{ color: '#007594' }}>{item.description}</Text>
+							<Text style={{ fontWeight: 'normal', fontSize: 12, width: 160 }}>{item.title}</Text>
+                <Image
+            style={styles.img}
+            source={(item.type == 'video') ? require('../assets/video-greyish.png') : (item.type == 'audio') ? require('../assets/audio-greyish.png') : require('../assets/FTF-A-logo-bar.png')}
+   />
+							<Text note style={{ color: '#0D5564', fontSize: 10, width: 160 }}>{item.description}</Text>
+
 						</ListItem>
 					}/>}
 				</Content>

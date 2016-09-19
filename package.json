@@ -12,6 +12,8 @@
     "react": "15.3.1",
     "react-native": "0.32.0",
     "react-native-audioplayer": "^0.2.0",
+    "react-native-file-opener": "^0.2.0",
+    "react-native-fs": "^2.0.1-rc.2",
     "react-native-orientation": "^1.17.0",
     "react-native-router-flux": "^3.35.0",
     "react-native-swipe-carousel": "^0.1.7",

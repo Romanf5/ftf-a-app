@@ -82,13 +82,13 @@ export default class MediaScreen extends Component {
 			<Container>
 				<Header backgroundColor={'rgb(13, 85, 100)'}>
 						<Button transparent onPress={Actions.pop}>
-							<Image source={require('../assets/arrow-back.png')} />
+							<Image source={require('../assets/arrow.png')} />
 						</Button>
 						<Title><Image source={require('../assets/FTF-A-logo-bar.png')} /></Title>
 				</Header>
 				<Content style={{backgroundColor: '#f6f6f6'}}>
 					<View style={{paddingLeft: 15, paddingRight: 15}}>
-						<H3 style={{textAlign: 'center', fontWeight: 'bold', marginTop: 15}}>{this.state.selectedItem.title}</H3>
+						<H3 style={{textAlign: 'center', fontWeight: 'normal', marginTop: 15 }}>{this.state.selectedItem.title}</H3>
 					</View>
 					<View style={styles.shad}>
 						<View>
@@ -103,10 +103,10 @@ export default class MediaScreen extends Component {
 								<Col>
 									<Text style={styles.txt}>{this.state.selectedItem.title}</Text>
 								</Col>
-								<Col style={{width: 70}}>
+								<Col style={{width: 50}}>
 									<Image
 										style={styles.img}
-										source={(this.state.selectedItem.type == 'video') ? require('../assets/icon-movie.png') : (this.state.selectedItem.type == 'audio') ? require('../assets/icon-audio.png') : require('../assets/FTF-A-logo-bar.png')}
+										source={(this.state.selectedItem.type == 'video') ? require('../assets/video@3x.png') : (this.state.selectedItem.type == 'audio') ? require('../assets/audio.png') : require('../assets/FTF-A-logo-bar.png')}
 									/>
 								</Col>
 							</Grid>
@@ -146,7 +146,7 @@ var styles = StyleSheet.create({
 		alignSelf: "flex-end"
 	},
 	txt: {
-		fontWeight: 'bold'
+		fontWeight: 'normal',
 	},
 	descrTitle: {
 		//flexDirection: "row",
