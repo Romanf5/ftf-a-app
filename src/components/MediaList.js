@@ -100,14 +100,14 @@ export default class MediaList extends Component {
                                               }} >
               <Grid>
                  <Col style={{width: 80,height: 90, marginTop: 5}}>
-                   <Thumbnail style= {{marginTop: 5}} size={80} source={{uri: item.thumbnail}} />
+                   <Thumbnail square style= {{marginTop: 5}} size={80} source={{uri: item.thumbnail}} />
                  </Col>
                  <Col style={{ width: 180,height: 90, margin: 5, marginLeft: 12 }}>
-                    <Text style={{ fontWeight: 'normal', fontSize: 12, lineHeight: 16,marginTop: 5 }}>{item.title}</Text>
-                    	<Text note style={{ color: '#0D5564', fontSize: 10, lineHeight: 14, marginTop: 7}}>{item.description}</Text>
+                    <Text style={{ fontWeight: 'normal', fontSize: 12, lineHeight: 14,marginTop: 3 }}>{item.title}</Text>
+                    	<Text note style={{ color: '#0D5564', fontSize: 10, lineHeight: 12, marginTop: 7}}>{item.description}</Text>
                  </Col>
                  <Col style={{width: 25 ,height: 90, margin: 5, paddingLeft: 8 }}>
-                   <Image style={{marginTop: 40, width: 32, height: 28 }}
+                   <Image style={{marginTop: 54, width: 35, height: 30 }}
 
                  source={(item.type == 'video') ? require('../assets/video-greyish.png') : (item.type == 'audio') ? require('../assets/audio-greyish.png') : require('../assets/FTF-A-logo-bar.png')}
                  />
