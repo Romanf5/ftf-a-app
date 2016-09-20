@@ -88,7 +88,7 @@ export default class MediaScreen extends Component {
 				</Header>
 				<Content style={{backgroundColor: '#f6f6f6'}}>
 					<View style={{paddingLeft: 15, paddingRight: 15}}>
-			
+
 					</View>
 					<View style={styles.shad}>
 						<View>
@@ -110,7 +110,7 @@ export default class MediaScreen extends Component {
 									/>
 								</Col>
 							</Grid>
-							<Text style={{marginTop: 25}}>{this.state.selectedItem.description}</Text>
+							<Text  style={{marginTop: 8, marginLeft: 6, fontSize: 12 }}>{this.state.selectedItem.description}</Text>
 						</View>
 					</View>
 
@@ -143,22 +143,30 @@ export default class MediaScreen extends Component {
 
 var styles = StyleSheet.create({
 	img: {
-		alignSelf: "flex-end"
+		alignSelf: "flex-end",
+		//marginTop: 54,
+		width: 35,
+		height: 30,
+		marginTop: 2
 	},
 	txt: {
 		fontWeight: 'normal',
+		marginLeft: 6,
+		marginTop: 3
 	},
 	descrTitle: {
 		//flexDirection: "row",
 		backgroundColor: '#fff',
 		padding: 10,
 		paddingBottom: 30
+
+
 	},
 	shad: {
 		// shadowColor: 'rgb(130, 130, 130)',
 		// shadowOffset: {width: 3, height: 3},
 		// shadowOpacity: 0.2,
 		// shadowRadius: 1.5,
-		 margin: 8
+		 margin: 0
 	}
 })
